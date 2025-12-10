@@ -1,5 +1,5 @@
 import { Vonage } from '@vonage/server-sdk';
-import { INotificationService } from '../../application/use-cases/alert/SendAlertUseCase';
+import { INotificationService } from '@application/use-cases/alert/SendAlertUseCase';
 
 export class VonageSmsService implements Partial<INotificationService> {
   private vonage: Vonage;
@@ -8,7 +8,7 @@ export class VonageSmsService implements Partial<INotificationService> {
   constructor() {
     const apiKey = process.env.VONAGE_API_KEY;
     const apiSecret = process.env.VONAGE_API_SECRET;
-    
+
     if (!apiKey || !apiSecret) {
       throw new Error('Missing Vonage environment variables');
     }
@@ -25,10 +25,10 @@ export class VonageSmsService implements Partial<INotificationService> {
     try {
       // Formatar número de telefone (remover caracteres especiais)
       const formattedNumber = this.formatPhoneNumber(to);
-      
+
       // Truncar mensagem se necessário (SMS tem limite de 160 caracteres)
-      const truncatedMessage = message.length > 160 
-        ? message.substring(0, 157) + '...' 
+      const truncatedMessage = message.length > 160
+        ? message.substring(0, 157) + '...'
         : message;
 
       const response = await this.vonage.sms.send({
@@ -38,12 +38,12 @@ export class VonageSmsService implements Partial<INotificationService> {
       });
 
       const messageResponse = response.messages[0];
-      
+
       if (messageResponse.status === '0') {
         console.log(`📱 SMS sent successfully to ${to}. ID: ${messageResponse['message-id']}`);
         return true;
       } else {
-        console.error(`SMS failed: ${messageResponse['error-text']}`);
+        console.error(`SMS failed: ${messageResponse.errorText}`);
         return false;
       }
     } catch (error) {
@@ -55,12 +55,12 @@ export class VonageSmsService implements Partial<INotificationService> {
   private formatPhoneNumber(phone: string): string {
     // Remove todos os caracteres não numéricos exceto o '+'
     let formatted = phone.replace(/[^\d+]/g, '');
-    
+
     // Se não começar com '+', assume que é um número brasileiro
     if (!formatted.startsWith('+')) {
       formatted = '+55' + formatted;
     }
-    
+
     return formatted;
   }
 }
