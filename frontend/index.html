@@ -4,168 +4,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIMOC - Sistema de Monitoramento Corporativo</title>
+    <title>SIMOC | Sistema Inteligente de Monitoramento Corporativo</title>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome para ícones -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Animate.css para animações -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
     <style>
-        /* Estilos personalizados */
-        .gradient-bg {
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+        * {
+            font-family: 'Inter', sans-serif;
         }
 
-        .card-hover {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        :root {
+            --primary-dark: #0A0F2D;
+            --primary-blue: #2563EB;
+            --accent-teal: #0D9488;
+            --accent-indigo: #4F46E5;
+            --light-bg: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #64748B;
         }
 
-        .card-hover:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        body {
+            color: var(--text-primary);
+            background-color: var(--light-bg);
+            overflow-x: hidden;
         }
 
-        .pulse-animation {
-            animation: pulse 2s infinite;
+        /* Navbar */
+        .navbar {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.92);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
         }
 
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
-            }
-
-            70% {
-                box-shadow: 0 0 0 15px rgba(37, 99, 235, 0);
-            }
-
-            100% {
-                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
-            }
+        /* Hero Section */
+        .hero-gradient {
+            background: linear-gradient(135deg, #0A0F2D 0%, #1E3A8A 50%, #2563EB 100%);
         }
 
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
             border-radius: 50%;
-            margin: 0 auto 20px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, rgba(37, 99, 235, 0) 70%);
+            filter: blur(60px);
+            z-index: 0;
         }
 
-        .dashboard-preview {
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        /* Cards */
+        .feature-card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #E2E8F0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            z-index: 10;
+            overflow: hidden;
         }
 
-        .floating {
-            animation: floating 6s ease-in-out infinite;
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+            border-color: #CBD5E1;
         }
 
-        @keyframes floating {
-            0% {
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-blue), var(--accent-teal));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Stats */
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-indigo));
+            color: white;
+            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(37, 99, 235, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Form */
+        .form-input {
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            padding: 14px 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Animations */
+        @keyframes float {
+
+            0%,
+            100% {
                 transform: translateY(0px);
             }
 
             50% {
-                transform: translateY(-20px);
-            }
-
-            100% {
-                transform: translateY(0px);
+                transform: translateY(-15px);
             }
         }
 
-        /* Responsividade aprimorada */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem !important;
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes pulse-subtle {
+
+            0%,
+            100% {
+                opacity: 1;
             }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        .pulse-subtle {
+            animation: pulse-subtle 3s ease-in-out infinite;
+        }
+
+        /* Section Dividers */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #E2E8F0, transparent);
+        }
+
+        /* Dashboard Preview */
+        .dashboard-preview {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Checkbox */
+        .custom-checkbox {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            border: 2px solid #CBD5E1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        input:checked+.custom-checkbox {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+
+        input:checked+.custom-checkbox i {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .custom-checkbox i {
+            color: white;
+            font-size: 12px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+            font-weight: 600;
+            padding: 16px 32px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(37, 99, 235, 0.05);
+            transform: translateY(-2px);
         }
     </style>
 </head>
 
-<body class="bg-gray-50 text-gray-800 font-sans">
-    <!-- Header / Navbar -->
-    <header class="fixed w-full bg-white/90 backdrop-blur-md z-50 shadow-sm">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
-                    <i class="fas fa-network-wired text-white text-xl"></i>
+<body class="antialiased">
+    <!-- Navigation -->
+    <header class="navbar fixed w-full z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div
+                        class="w-10 h-10 rounded-lg bg-gradient-to-br from-[#0A0F2D] to-[#2563EB] flex items-center justify-center">
+                        <i class="fas fa-network-wired text-white text-lg"></i>
+                    </div>
+                    <span
+                        class="text-2xl font-bold bg-gradient-to-r from-[#0A0F2D] to-[#2563EB] bg-clip-text text-transparent">SIMOC</span>
                 </div>
-                <span class="text-2xl font-bold text-blue-900">SIMOC</span>
+
+                <nav class="hidden md:flex space-x-10">
+                    <a href="#problema"
+                        class="text-[#64748B] hover:text-[#2563EB] font-medium transition-colors">Problema</a>
+                    <a href="#solucao"
+                        class="text-[#64748B] hover:text-[#2563EB] font-medium transition-colors">Solução</a>
+                    <a href="#funcionalidades"
+                        class="text-[#64748B] hover:text-[#2563EB] font-medium transition-colors">Funcionalidades</a>
+                    <a href="#contato"
+                        class="text-[#64748B] hover:text-[#2563EB] font-medium transition-colors">Contato</a>
+                    <a href="/sigIn.html" class="text-[#2563EB] hover:text-[#64748B] font-medium transition-colors">
+                        Entrar
+                    </a>
+                </nav>
+
+                <button id="mobile-menu-btn" class="md:hidden text-[#0A0F2D]">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
             </div>
 
-            <nav class="hidden md:flex space-x-8">
-                <a href="#problema" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Problema</a>
-                <a href="#solucao" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Solução</a>
-                <a href="#funcionalidades"
-                    class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Funcionalidades</a>
-                <a href="#contato" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Contato</a>
-            </nav>
-
-            <button id="mobile-menu-btn" class="md:hidden text-blue-900">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
-        </div>
-
-        <!-- Menu Mobile -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white py-4 px-4 shadow-lg">
-            <div class="flex flex-col space-y-4">
-                <a href="#problema" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Problema</a>
-                <a href="#solucao" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Solução</a>
-                <a href="#funcionalidades"
-                    class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Funcionalidades</a>
-                <a href="#contato" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Contato</a>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-2">
+                <div class="flex flex-col space-y-4">
+                    <a href="#problema"
+                        class="text-[#64748B] hover:text-[#2563EB] font-medium py-2 transition-colors">Problema</a>
+                    <a href="#solucao"
+                        class="text-[#64748B] hover:text-[#2563EB] font-medium py-2 transition-colors">Solução</a>
+                    <a href="#funcionalidades"
+                        class="text-[#64748B] hover:text-[#2563EB] font-medium py-2 transition-colors">Funcionalidades</a>
+                    <a href="#contato"
+                        class="text-[#64748B] hover:text-[#2563EB] font-medium py-2 transition-colors">Contato</a>
+                    <a href="/sigIn.html" class="btn-secondary py-3 text-center">
+                        Entrar
+                    </a>
+                </div>
             </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="gradient-bg pt-32 pb-20 px-4 overflow-hidden">
-        <div class="container mx-auto">
+    <section class="hero-gradient pt-32 pb-24 px-6 relative overflow-hidden">
+        <div class="hero-glow -top-40 -right-40"></div>
+        <div class="hero-glow -bottom-40 -left-40 opacity-50"></div>
+
+        <div class="container mx-auto relative z-10">
             <div class="flex flex-col lg:flex-row items-center">
-                <div class="lg:w-1/2 mb-12 lg:mb-0 text-center lg:text-left">
-                    <h1
-                        class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 hero-title animate__animated animate__fadeInUp">
-                        APRESENTANDO O<br>
-                        <span class="text-yellow-300">SIMOC</span><br>
-                        <span class="text-3xl md:text-4xl">SISTEMA DE MONITORAMENTO CORPORATIVO</span>
+                <div class="lg:w-1/2 mb-16 lg:mb-0">
+                    <div
+                        class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
+                        <span class="text-white/80 text-sm font-medium">APRESENTANDO O SISTEMA</span>
+                    </div>
+
+                    <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                        <span class="text-[#7DD3FC]">SIMOC</span><br>
+                        <span class="text-4xl md:text-5xl">Monitoramento Corporativo</span><br>
+                        <span class="text-3xl md:text-4xl font-normal text-white/80">Inteligente</span>
                     </h1>
 
-                    <p class="text-xl text-blue-100 mb-8 animate__animated animate__fadeInUp animate__delay-1s">
-                        Monitoramento inteligente para garantir a estabilidade e performance da sua infraestrutura de
-                        rede.
+                    <p class="text-xl text-white/70 mb-10 max-w-2xl">
+                        A solução definitiva para monitoramento de infraestruturas de rede.
+                        Prevenção proativa, alertas instantâneos e dashboard em tempo real.
                     </p>
 
-                    <div class="flex flex-col sm:flex-row gap-4 animate__animated animate__fadeInUp animate__delay-2s">
-                        <a href="#contato"
-                            class="bg-white text-blue-900 font-bold py-4 px-8 rounded-lg text-lg hover:bg-blue-50 transition-colors text-center pulse-animation">
+                    <div class="flex flex-col sm:flex-row gap-5">
+                        <a href="#contato" class="btn-primary text-center">
                             Solicitar Demonstração <i class="fas fa-arrow-right ml-2"></i>
                         </a>
-                        <a href="#solucao"
-                            class="bg-transparent border-2 border-white text-white font-bold py-4 px-8 rounded-lg text-lg hover:bg-white/10 transition-colors text-center">
-                            Saiba Mais
-                        </a>
+                        <!-- <a href="#solucao" class="btn-secondary text-center">
+                            <i class="fas fa-play-circle mr-2"></i> Ver Solução
+                        </a> -->
+                    </div>
+
+                    <div class="mt-12 flex flex-wrap gap-8">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center mr-3">
+                                <i class="fas fa-check text-green-400"></i>
+                            </div>
+                            <span class="text-white/80 font-medium">Uptime</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center mr-3">
+                                <i class="fas fa-bolt text-blue-400"></i>
+                            </div>
+                            <span class="text-white/80 font-medium">Alertas em rapidos</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center mr-3">
+                                <i class="fas fa-shield-alt text-purple-400"></i>
+                            </div>
+                            <span class="text-white/80 font-medium">Seguro & Confiável</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="lg:w-1/2 relative">
-                    <div class="dashboard-preview floating">
+                <div class="lg:w-1/2 flex justify-center">
+                    <div class="dashboard-preview float-animation max-w-2xl">
+                        <div class="bg-[#0F172A] p-4 flex items-center">
+                            <div class="flex space-x-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="flex-1 text-center">
+                                <span class="text-white/60 text-sm font-medium">dashboard.simoc.com</span>
+                            </div>
+                        </div>
                         <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
                             alt="Dashboard SIMOC" class="w-full h-auto">
-                    </div>
-
-                    <!-- Elementos flutuantes decorativos -->
-                    <div
-                        class="absolute -top-4 -right-4 w-20 h-20 bg-yellow-400 rounded-full opacity-20 animate__animated animate__pulse animate__infinite">
-                    </div>
-                    <div
-                        class="absolute -bottom-8 -left-8 w-32 h-32 bg-blue-300 rounded-full opacity-20 animate__animated animate__pulse animate__infinite animate__delay-1s">
                     </div>
                 </div>
             </div>
@@ -173,56 +376,61 @@
     </section>
 
     <!-- Problema Section -->
-    <section id="problema" class="py-20 px-4 bg-white">
+    <section id="problema" class="py-20 px-6 bg-white">
         <div class="container mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-blue-900 mb-4 animate__animated">O PROBLEMA</h2>
-                <div class="w-24 h-1 bg-blue-600 mx-auto mb-8"></div>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Empresas com infraestruturas de rede enfrentam desafios constantes que impactam a produtividade e a
-                    continuidade dos negócios.
+            <div class="text-center mb-16 fade-in">
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-[#F1F5F9] mb-6">
+                    <span class="text-[#64748B] text-sm font-medium uppercase tracking-wider">O DESAFIO</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-[#0F172A] mb-6">Problemas de Infraestrutura de Rede</h2>
+                <p class="text-xl text-[#64748B] max-w-3xl mx-auto">
+                    Empresas com infraestruturas complexas enfrentam desafios constantes que impactam operações críticas
+                    e geram prejuízos significativos.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="card-hover bg-gray-50 p-8 rounded-xl border border-gray-200">
-                    <div class="feature-icon bg-red-100 text-red-600">
-                        <i class="fas fa-exclamation-triangle text-3xl"></i>
+                <div class="feature-card p-8 fade-in">
+                    <div class="w-14 h-14 rounded-xl bg-red-50 flex items-center justify-center mb-6">
+                        <i class="fas fa-exclamation-triangle text-2xl text-red-500"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Quedas Inesperadas</h3>
-                    <p class="text-gray-600 text-center">
-                        Falhas súbitas na rede que interrompem operações críticas e geram prejuízos financeiros.
+                    <h3 class="text-xl font-bold text-[#0F172A] mb-4">Quedas Inesperadas</h3>
+                    <p class="text-[#64748B]">
+                        Falhas súbitas na rede interrompem operações críticas, causando paradas produtivas e prejuízos
+                        financeiros diretos.
                     </p>
                 </div>
 
-                <div class="card-hover bg-gray-50 p-8 rounded-xl border border-gray-200">
-                    <div class="feature-icon bg-yellow-100 text-yellow-600">
-                        <i class="fas fa-tachometer-alt text-3xl"></i>
+                <div class="feature-card p-8 fade-in">
+                    <div class="w-14 h-14 rounded-xl bg-yellow-50 flex items-center justify-center mb-6">
+                        <i class="fas fa-tachometer-alt text-2xl text-yellow-500"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Lentidão Excessiva</h3>
-                    <p class="text-gray-600 text-center">
-                        Perda de performance na rede que reduz a eficiência das equipes e impacta a experiência do
-                        usuário.
+                    <h3 class="text-xl font-bold text-[#0F172A] mb-4">Lentidão Excessiva</h3>
+                    <p class="text-[#64748B]">
+                        Degradação de performance afeta a produtividade das equipes e compromete a experiência dos
+                        usuários finais.
                     </p>
                 </div>
 
-                <div class="card-hover bg-gray-50 p-8 rounded-xl border border-gray-200">
-                    <div class="feature-icon bg-purple-100 text-purple-600">
-                        <i class="fas fa-server text-3xl"></i>
+                <div class="feature-card p-8 fade-in">
+                    <div class="w-14 h-14 rounded-xl bg-purple-50 flex items-center justify-center mb-6">
+                        <i class="fas fa-server text-2xl text-purple-500"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Falhas de Dispositivos</h3>
-                    <p class="text-gray-600 text-center">
-                        Routers, switches e servidores falhando sem alertas prévios, causando interrupções prolongadas.
+                    <h3 class="text-xl font-bold text-[#0F172A] mb-4">Falhas de Dispositivos</h3>
+                    <p class="text-[#64748B]">
+                        Routers, switches e servidores falham sem alertas prévios, resultando em interrupções
+                        prolongadas e difíceis de diagnosticar.
                     </p>
                 </div>
 
-                <div class="card-hover bg-gray-50 p-8 rounded-xl border border-gray-200">
-                    <div class="feature-icon bg-blue-100 text-blue-600">
-                        <i class="fas fa-search text-3xl"></i>
+                <div class="feature-card p-8 fade-in">
+                    <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center mb-6">
+                        <i class="fas fa-search text-2xl text-blue-500"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Dificuldade de Diagnóstico</h3>
-                    <p class="text-gray-600 text-center">
-                        Tempo excessivo para identificar a origem dos problemas, prolongando a indisponibilidade.
+                    <h3 class="text-xl font-bold text-[#0F172A] mb-4">Diagnóstico Complexo</h3>
+                    <p class="text-[#64748B]">
+                        Dificuldade em identificar rapidamente a origem dos problemas, prolongando o tempo de
+                        indisponibilidade dos serviços.
                     </p>
                 </div>
             </div>
@@ -230,72 +438,74 @@
     </section>
 
     <!-- Solução Section -->
-    <section id="solucao" class="py-20 px-4 bg-gradient-to-b from-blue-50 to-white">
+    <section id="solucao" class="py-20 px-6 bg-[#F8FAFC]">
         <div class="container mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-blue-900 mb-4">A SOLUÇÃO</h2>
-                <div class="w-24 h-1 bg-blue-600 mx-auto mb-8"></div>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Criamos um Sistema Inteligente de Monitoramento de Infraestruturas de Redes, capaz de transformar a
-                    gestão da sua rede.
-                </p>
-            </div>
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-white mb-6 border border-[#E2E8F0]">
+                        <span class="text-[#64748B] text-sm font-medium uppercase tracking-wider">Nossa Solução</span>
+                    </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <div class="bg-white rounded-xl shadow-xl p-8 mb-8 card-hover">
-                        <div class="flex items-start mb-6">
-                            <div class="bg-green-100 p-3 rounded-lg mr-4">
-                                <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                    <h2 class="text-4xl md:text-5xl font-bold text-[#0F172A] mb-8">
+                        Sistema Inteligente de Monitoramento
+                    </h2>
+
+                    <p class="text-xl text-[#64748B] mb-12">
+                        Criamos um sistema completo que monitora automaticamente toda a sua infraestrutura,
+                        previne falhas e notifica sua equipe antes que os problemas afetem seus negócios.
+                    </p>
+
+                    <div class="space-y-8">
+                        <div class="flex items-start">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center mr-5 flex-shrink-0">
+                                <i class="fas fa-check-circle text-xl text-green-600"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">Verificação Automática</h3>
-                                <p class="text-gray-600">
-                                    Monitoramento automático do estado de servidores, routers, switches, APIs, domínios,
-                                    portas e outros serviços em tempo real.
+                                <h3 class="text-xl font-bold text-[#0F172A] mb-2">Verificação Automática</h3>
+                                <p class="text-[#64748B]">
+                                    Monitoramento 24/7 de servidores, routers, switches, APIs, domínios, portas e todos
+                                    os serviços críticos.
                                 </p>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="bg-white rounded-xl shadow-xl p-8 mb-8 card-hover">
-                        <div class="flex items-start mb-6">
-                            <div class="bg-red-100 p-3 rounded-lg mr-4">
-                                <i class="fas fa-bell text-red-600 text-2xl"></i>
+                        <div class="flex items-start">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center mr-5 flex-shrink-0">
+                                <i class="fas fa-bell text-xl text-red-600"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">Alertas Instantâneos</h3>
-                                <p class="text-gray-600">
-                                    Notificações por SMS ou e-mail no momento exato em que ocorre uma falha ou anomalia,
-                                    permitindo ação imediata.
+                                <h3 class="text-xl font-bold text-[#0F172A] mb-2">Alertas Instantâneos</h3>
+                                <p class="text-[#64748B]">
+                                    Notificações por SMS ou e-mail no momento exato da falha, permitindo ação imediata
+                                    da equipe técnica.
                                 </p>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="bg-white rounded-xl shadow-xl p-8 mb-8 card-hover">
-                        <div class="flex items-start mb-6">
-                            <div class="bg-blue-100 p-3 rounded-lg mr-4">
-                                <i class="fas fa-tachometer-alt text-blue-600 text-2xl"></i>
+                        <div class="flex items-start">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mr-5 flex-shrink-0">
+                                <i class="fas fa-tachometer-alt text-xl text-blue-600"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">Dashboard em Tempo Real</h3>
-                                <p class="text-gray-600">
-                                    Painel de monitoramento moderno com gráficos, logs, estatísticas e status
-                                    atualizados em tempo real.
+                                <h3 class="text-xl font-bold text-[#0F172A] mb-2">Dashboard em Tempo Real</h3>
+                                <p class="text-[#64748B]">
+                                    Painel moderno com gráficos, logs, estatísticas e status atualizados em tempo real
+                                    para toda a infraestrutura.
                                 </p>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="bg-white rounded-xl shadow-xl p-8 card-hover">
-                        <div class="flex items-start mb-6">
-                            <div class="bg-indigo-100 p-3 rounded-lg mr-4">
-                                <i class="fas fa-shield-alt text-indigo-600 text-2xl"></i>
+                        <div class="flex items-start">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center mr-5 flex-shrink-0">
+                                <i class="fas fa-shield-alt text-xl text-indigo-600"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold text-gray-800 mb-2">Sistema Seguro</h3>
-                                <p class="text-gray-600">
+                                <h3 class="text-xl font-bold text-[#0F172A] mb-2">Sistema Seguro</h3>
+                                <p class="text-[#64748B]">
                                     Autenticação profissional com gestão de utilizadores e controle de acesso baseado em
                                     funções (RBAC).
                                 </p>
@@ -304,22 +514,49 @@
                     </div>
                 </div>
 
-                <div class="relative">
-                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
-                        alt="Solução SIMOC" class="rounded-xl shadow-2xl">
+                <div class="lg:w-1/2">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
+                            alt="Solução SIMOC" class="rounded-2xl shadow-2xl">
 
-                    <!-- Estatísticas flutuantes -->
-                    <div class="absolute -top-6 -left-6 bg-white p-6 rounded-xl shadow-lg">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-blue-700">99.9%</div>
-                            <div class="text-gray-600">Uptime Garantido</div>
+                        <div class="absolute -top-6 -right-6 stat-card p-6 rounded-2xl shadow-xl">
+                            <div class="text-center">
+                                <div
+                                    class="text-4xl font-bold bg-gradient-to-r from-[#2563EB] to-[#0D9488] bg-clip-text text-transparent">
+                                    99.9%</div>
+                                <div class="text-[#64748B] font-medium">Uptime Garantido</div>
+                            </div>
+                        </div>
+
+                        <div class="absolute -bottom-6 -left-6 stat-card p-6 rounded-2xl shadow-xl">
+                            <div class="text-center">
+                                <div
+                                    class="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">
+                                    -60%</div>
+                                <div class="text-[#64748B] font-medium">Tempo de Resolução</div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="absolute -bottom-6 -right-6 bg-white p-6 rounded-xl shadow-lg">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-green-700">-60%</div>
-                            <div class="text-gray-600">Tempo de Resolução</div>
+                    <div class="mt-12 grid grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-xl border border-[#E2E8F0]">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center mr-3">
+                                    <i class="fas fa-bolt text-blue-600"></i>
+                                </div>
+                                <span class="text-2xl font-bold text-[#0F172A]">3s</span>
+                            </div>
+                            <p class="text-[#64748B] text-sm">Tempo médio para detecção de falhas</p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl border border-[#E2E8F0]">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center mr-3">
+                                    <i class="fas fa-chart-line text-green-600"></i>
+                                </div>
+                                <span class="text-2xl font-bold text-[#0F172A]">100+</span>
+                            </div>
+                            <p class="text-[#64748B] text-sm">Tipos de dispositivos monitorados</p>
                         </div>
                     </div>
                 </div>
@@ -328,83 +565,105 @@
     </section>
 
     <!-- Funcionalidades Section -->
-    <section id="funcionalidades" class="py-20 px-4 bg-white">
+    <section id="funcionalidades" class="py-20 px-6 bg-white">
         <div class="container mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-blue-900 mb-4">FUNCIONALIDADES PRINCIPAIS</h2>
-                <div class="w-24 h-1 bg-blue-600 mx-auto mb-8"></div>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Descubra as principais características que tornam o SIMOC a solução ideal para o monitoramento da
-                    sua infraestrutura.
+            <div class="text-center mb-16 fade-in">
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-[#F1F5F9] mb-6">
+                    <span class="text-[#64748B] text-sm font-medium uppercase tracking-wider">FUNCIONALIDADES</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-[#0F172A] mb-6">Capacidades do Sistema</h2>
+                <p class="text-xl text-[#64748B] max-w-3xl mx-auto">
+                    Recursos avançados projetados para atender às necessidades de infraestruturas corporativas
+                    complexas.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-gradient-to-br from-blue-50 to-white p-8 rounded-xl border border-blue-100 card-hover">
-                    <div class="text-blue-700 mb-6">
-                        <i class="fas fa-plug text-4xl"></i>
+                <div class="feature-card p-8 fade-in">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-plug text-xl text-blue-600"></i>
+                        </div>
+                        <span
+                            class="text-sm font-medium text-[#2563EB] bg-blue-50 px-3 py-1 rounded-full">Monitoramento</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Monitoramento Multi-dispositivo</h3>
-                    <p class="text-gray-600">
-                        Acompanhe servidores, routers, switches, firewalls e todos os componentes críticos da sua rede a
-                        partir de uma única plataforma.
+                    <h3 class="text-xl font-bold text-[#0F172A] mb-4">Multi-dispositivo</h3>
+                    <p class="text-[#64748B]">
+                        Acompanhe servidores, routers, switches, firewalls e todos os componentes críticos a partir de
+                        uma única plataforma unificada.
                     </p>
                 </div>
 
-                <div class="bg-gradient-to-br from-green-50 to-white p-8 rounded-xl border border-green-100 card-hover">
-                    <div class="text-green-700 mb-6">
-                        <i class="fas fa-chart-line text-4xl"></i>
+                <div class="feature-card p-8 fade-in">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
+                            <i class="fas fa-chart-line text-xl text-green-600"></i>
+                        </div>
+                        <span
+                            class="text-sm font-medium text-green-600 bg-green-50 px-3 py-1 rounded-full">Análise</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Análise de Performance</h3>
-                    <p class="text-gray-600">
-                        Gráficos detalhados e relatórios de performance para identificar tendências e planejar upgrades
-                        de infraestrutura.
+                    <h3 class="text-xl font-bold text-[#0F172A] mb-4">Performance Avançada</h3>
+                    <p class="text-[#64748B]">
+                        Gráficos detalhados, relatórios de performance e análise de tendências para planejamento
+                        proativo de capacidade.
                     </p>
                 </div>
 
-                <div
-                    class="bg-gradient-to-br from-purple-50 to-white p-8 rounded-xl border border-purple-100 card-hover">
-                    <div class="text-purple-700 mb-6">
-                        <i class="fas fa-history text-4xl"></i>
+                <div class="feature-card p-8 fade-in">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
+                            <i class="fas fa-history text-xl text-purple-600"></i>
+                        </div>
+                        <span
+                            class="text-sm font-medium text-purple-600 bg-purple-50 px-3 py-1 rounded-full">Auditoria</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Histórico Completo</h3>
-                    <p class="text-gray-600">
-                        Mantenha um log detalhado de todos os eventos, falhas e intervenções para auditoria e análise de
+                    <h3 class="text-xl font-bold text-[#0F172A] mb-4">Histórico Completo</h3>
+                    <p class="text-[#64748B]">
+                        Log detalhado de todos os eventos, falhas e intervenções para auditoria, compliance e análise de
                         padrões.
                     </p>
                 </div>
 
-                <div
-                    class="bg-gradient-to-br from-yellow-50 to-white p-8 rounded-xl border border-yellow-100 card-hover">
-                    <div class="text-yellow-700 mb-6">
-                        <i class="fas fa-mobile-alt text-4xl"></i>
+                <div class="feature-card p-8 fade-in">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-yellow-100 flex items-center justify-center">
+                            <i class="fas fa-mobile-alt text-xl text-yellow-600"></i>
+                        </div>
+                        <span
+                            class="text-sm font-medium text-yellow-600 bg-yellow-50 px-3 py-1 rounded-full">Acesso</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Acesso Mobile</h3>
-                    <p class="text-gray-600">
-                        Dashboard responsivo acessível de qualquer dispositivo, permitindo monitoramento remoto a
-                        qualquer hora.
+                    <h3 class="text-xl font-bold text-[#0F172A] mb-4">Dashboard Mobile</h3>
+                    <p class="text-[#64748B]">
+                        Interface responsiva acessível de qualquer dispositivo, permitindo monitoramento remoto a
+                        qualquer hora, em qualquer lugar.
                     </p>
                 </div>
 
-                <div class="bg-gradient-to-br from-red-50 to-white p-8 rounded-xl border border-red-100 card-hover">
-                    <div class="text-red-700 mb-6">
-                        <i class="fas fa-user-shield text-4xl"></i>
+                <div class="feature-card p-8 fade-in">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center">
+                            <i class="fas fa-user-shield text-xl text-red-600"></i>
+                        </div>
+                        <span class="text-sm font-medium text-red-600 bg-red-50 px-3 py-1 rounded-full">Segurança</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Controle de Acesso</h3>
-                    <p class="text-gray-600">
-                        Sistema de permissões granulares com diferentes níveis de acesso para administradores, técnicos
-                        e visualizadores.
+                    <h3 class="text-xl font-bold text-[#0F172A] mb-4">Controle de Acesso</h3>
+                    <p class="text-[#64748B]">
+                        Sistema de permissões granulares com RBAC, definindo níveis de acesso para administradores,
+                        técnicos e visualizadores.
                     </p>
                 </div>
 
-                <div
-                    class="bg-gradient-to-br from-indigo-50 to-white p-8 rounded-xl border border-indigo-100 card-hover">
-                    <div class="text-indigo-700 mb-6">
-                        <i class="fas fa-cogs text-4xl"></i>
+                <div class="feature-card p-8 fade-in">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center">
+                            <i class="fas fa-cogs text-xl text-indigo-600"></i>
+                        </div>
+                        <span
+                            class="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">Integração</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Integrações</h3>
-                    <p class="text-gray-600">
-                        Conecte-se com ferramentas de ITSM, sistemas de tickets, Slack, Microsoft Teams e outras
+                    <h3 class="text-xl font-bold text-[#0F172A] mb-4">Conectividade Total</h3>
+                    <p class="text-[#64748B]">
+                        Integração com ferramentas de ITSM, sistemas de tickets, Slack, Microsoft Teams e outras
                         plataformas corporativas.
                     </p>
                 </div>
@@ -413,196 +672,223 @@
     </section>
 
     <!-- CTA Section -->
-    <section id="contato" class="py-20 px-4 gradient-bg text-white">
-        <div class="container mx-auto">
-            <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-4xl font-bold mb-6">Pronto para transformar o monitoramento da sua rede?</h2>
-                <p class="text-xl mb-10 text-blue-100">
-                    Solicite uma demonstração gratuita e descubra como o SIMOC pode aumentar a estabilidade e reduzir
-                    custos da sua infraestrutura.
-                </p>
+    <section id="contato" class="hero-gradient py-20 px-6 relative overflow-hidden">
+        <div class="hero-glow -top-40 -left-40 opacity-30"></div>
+        <div class="hero-glow -bottom-40 -right-40 opacity-30"></div>
 
-                <div class="bg-white rounded-xl p-8 shadow-2xl max-w-2xl mx-auto">
-                    <h3 class="text-2xl font-bold text-blue-900 mb-6">Solicitar Demonstração</h3>
 
-                    <form id="demo-form" class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="container mx-auto relative z-10 ">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Pronto para transformar seu
+                        monitoramento?</h2>
+                    <p class="text-xl text-white/80 max-w-2xl mx-auto">
+                        Solicite uma demonstração gratuita e descubra como o SIMOC pode aumentar a estabilidade e
+                        reduzir custos da sua infraestrutura.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
+                    <div class="text-center mb-10">
+                        <h3 class="text-3xl font-bold text-[#0F172A] mb-4">Solicitar Demonstração</h3>
+                        <p class="text-[#64748B]">Preencha o formulário abaixo e nossa equipe entrará em contato para
+                            agendar uma apresentação personalizada.</p>
+                    </div>
+
+                    <form id="demo-form" class="space-y-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
-                                <label class="block text-gray-700 text-left mb-2" for="name">Nome Completo</label>
-                                <input type="text" id="name"
-                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                                    required>
+                                <label class="block text-[#475569] text-left mb-3 font-medium" for="name">Nome Completo
+                                    *</label>
+                                <input type="text" id="name" class="form-input w-full" required>
                             </div>
 
                             <div>
-                                <label class="block text-gray-700 text-left mb-2" for="company">Empresa</label>
-                                <input type="text" id="company"
-                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                                    required>
+                                <label class="block text-[#475569] text-left mb-3 font-medium" for="company">Empresa
+                                    *</label>
+                                <input type="text" id="company" class="form-input w-full" required>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
-                                <label class="block text-gray-700 text-left mb-2" for="email">E-mail</label>
-                                <input type="email" id="email"
-                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                                    required>
+                                <label class="block text-[#475569] text-left mb-3 font-medium" for="email">E-mail
+                                    Corporativo *</label>
+                                <input type="email" id="email" class="form-input w-full" required>
                             </div>
 
                             <div>
-                                <label class="block text-gray-700 text-left mb-2" for="phone">Telefone</label>
-                                <input type="tel" id="phone"
-                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-                                    required>
+                                <label class="block text-[#475569] text-left mb-3 font-medium" for="phone">Telefone
+                                    *</label>
+                                <input type="tel" id="phone" class="form-input w-full" required>
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-gray-700 text-left mb-2" for="message">Mensagem (Opcional)</label>
-                            <textarea id="message" rows="3"
-                                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"></textarea>
+                            <label class="block text-[#475569] text-left mb-3 font-medium" for="message">Descreva sua
+                                necessidade (opcional)</label>
+                            <textarea id="message" rows="4" class="form-input w-full"></textarea>
                         </div>
 
-                        <button type="submit"
-                            class="w-full gradient-bg text-white font-bold py-4 px-8 rounded-lg text-lg hover:opacity-90 transition-opacity">
-                            Solicitar Demonstração <i class="fas fa-paper-plane ml-2"></i>
+                        <div class="flex items-start">
+                            <input type="checkbox" id="privacy" class="hidden" required>
+                            <label for="privacy" class="cursor-pointer flex items-start">
+                                <div class="custom-checkbox mt-1 mr-3 flex-shrink-0">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <span class="text-[#64748B] text-sm">
+                                    Concordo com a <a href="#" class="text-[#2563EB] hover:underline">Política de
+                                        Privacidade</a> e autorizo o contato da equipe SIMOC para apresentação do
+                                    produto.
+                                </span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn-primary w-full text-lg py-4">
+                            <i class="fas fa-paper-plane mr-2"></i> Solicitar Demonstração Personalizada
                         </button>
                     </form>
 
-                    <p class="text-gray-500 text-sm mt-4">
-                        Entraremos em contato em até 24 horas úteis para agendar sua demonstração personalizada.
-                    </p>
+                    <div class="mt-8 pt-8 border-t border-[#E2E8F0]">
+                        <div class="flex flex-col md:flex-row justify-between items-center">
+                            <div class="flex items-center mb-4 md:mb-0">
+                                <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mr-3">
+                                    <i class="fas fa-clock text-green-600"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium text-[#0F172A]">Resposta em 24h</div>
+                                    <div class="text-sm text-[#64748B]">Nossa equipe entra em contato rapidamente</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center mr-3">
+                                    <i class="fas fa-user-check text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium text-[#0F172A]">Demonstração Personalizada</div>
+                                    <div class="text-sm text-[#64748B]">Apresentação focada nas suas necessidades</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+
     </section>
 
+
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12 px-4">
+    <footer class="bg-[#0F172A] text-white py-16 px-6">
         <div class="container mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-8 md:mb-0">
-                    <div class="flex items-center space-x-2 mb-4">
-                        <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
-                            <i class="fas fa-network-wired text-white text-xl"></i>
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12">
+                <div class="mb-8 lg:mb-0">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div
+                            class="w-10 h-10 rounded-lg bg-gradient-to-br from-[#2563EB] to-[#0D9488] flex items-center justify-center">
+                            <i class="fas fa-network-wired text-white"></i>
                         </div>
                         <span class="text-2xl font-bold">SIMOC</span>
                     </div>
-                    <p class="text-gray-400">
-                        Sistema Inteligente de Monitoramento Corporativo
+                    <p class="text-[#94A3B8] max-w-md">
+                        Sistema Inteligente de Monitoramento Corporativo.
+                        Solução completa para monitoramento proativo de infraestruturas de rede corporativas.
                     </p>
                 </div>
 
-                <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                        <i class="fab fa-linkedin text-2xl"></i>
+                <!-- <div class="flex space-x-6">
+                    <a href="#"
+                        class="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors">
+                        <i class="fab fa-linkedin text-xl"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                        <i class="fab fa-twitter text-2xl"></i>
+                    <a href="#"
+                        class="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                        <i class="fab fa-facebook text-2xl"></i>
+                    <a href="#"
+                        class="w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors">
+                        <i class="fab fa-youtube text-xl"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                        <i class="fab fa-instagram text-2xl"></i>
-                    </a>
-                </div>
+                </div> -->
             </div>
 
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2023 SIMOC - Sistema de Monitoramento Corporativo. Todos os direitos reservados.</p>
-                <p class="mt-2">Desenvolvido com <i class="fas fa-heart text-red-500"></i> para infraestruturas mais
-                    estáveis e seguras.</p>
+            <div class="border-t border-white/10 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="text-[#94A3B8] text-sm mb-4 md:mb-0">
+                        &copy; 2025 SIMOC - Sistema de Monitoramento Corporativo. Todos os direitos reservados.
+                    </div>
+
+                    <div class="flex flex-wrap gap-6 text-sm">
+                        <a href="#" class="text-[#94A3B8] hover:text-white transition-colors">Termos de Uso</a>
+                        <a href="#" class="text-[#94A3B8] hover:text-white transition-colors">Política de
+                            Privacidade</a>
+                        <a href="#" class="text-[#94A3B8] hover:text-white transition-colors">Suporte</a>
+                        <a href="#" class="text-[#94A3B8] hover:text-white transition-colors">Documentação</a>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Botão de voltar ao topo -->
+    <!-- Back to Top Button -->
     <button id="back-to-top"
-        class="fixed bottom-8 right-8 bg-blue-600 text-white w-12 h-12 rounded-full shadow-lg hover:bg-blue-700 transition-colors hidden">
+        class="fixed bottom-8 right-8 w-14 h-14 rounded-full bg-gradient-to-br from-[#2563EB] to-[#0D9488] text-white shadow-2xl hover:shadow-xl transition-all duration-300 opacity-0 invisible flex items-center justify-center z-40">
         <i class="fas fa-chevron-up"></i>
     </button>
 
     <script>
-        // Menu mobile
+        // Mobile Menu Toggle
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
 
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
+            mobileMenuBtn.innerHTML = mobileMenu.classList.contains('hidden')
+                ? '<i class="fas fa-bars text-2xl"></i>'
+                : '<i class="fas fa-times text-2xl"></i>';
         });
 
-        // Fechar menu mobile ao clicar em um link
-        const mobileLinks = document.querySelectorAll('#mobile-menu a');
-        mobileLinks.forEach(link => {
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars text-2xl"></i>';
             });
         });
 
-        // Animação ao rolar a página
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+        // Scroll animations
+        const fadeElements = document.querySelectorAll('.fade-in');
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                    entry.target.classList.add('visible');
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        // Observar elementos para animação
-        document.querySelectorAll('#problema .card-hover, #solucao .card-hover, #funcionalidades .card-hover').forEach((el, index) => {
-            // Adicionar delay progressivo
-            el.style.animationDelay = `${index * 0.1}s`;
-            observer.observe(el);
-        });
+        fadeElements.forEach(el => observer.observe(el));
 
-        // Formulário de demonstração
-        const demoForm = document.getElementById('demo-form');
-        demoForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            // Coletar dados do formulário
-            const formData = {
-                name: document.getElementById('name').value,
-                company: document.getElementById('company').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                message: document.getElementById('message').value
-            };
-
-            // Aqui normalmente enviaríamos os dados para um servidor
-            // Por enquanto, apenas mostraremos um alerta
-            alert(`Obrigado, ${formData.name}! Sua solicitação de demonstração foi recebida. Entraremos em contato em breve.`);
-
-            // Resetar formulário
-            demoForm.reset();
-        });
-
-        // Botão de voltar ao topo
+        // Back to top button
         const backToTopBtn = document.getElementById('back-to-top');
 
         window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.classList.remove('hidden');
+            if (window.scrollY > 500) {
+                backToTopBtn.classList.remove('opacity-0', 'invisible');
+                backToTopBtn.classList.add('opacity-100', 'visible');
             } else {
-                backToTopBtn.classList.add('hidden');
+                backToTopBtn.classList.remove('opacity-100', 'visible');
+                backToTopBtn.classList.add('opacity-0', 'invisible');
             }
         });
 
         backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Suavizar rolagem para âncoras
+        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -612,18 +898,64 @@
 
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars text-2xl"></i>';
+
                     window.scrollTo({
-                        top: targetElement.offsetTop - 80,
+                        top: targetElement.offsetTop - 100,
                         behavior: 'smooth'
                     });
                 }
             });
         });
 
-        // Animar elementos ao carregar a página
-        window.addEventListener('load', () => {
-            document.querySelector('.hero-title').classList.add('animate__animated', 'animate__fadeInUp');
+        // Form submission
+        const demoForm = document.getElementById('demo-form');
+        demoForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                company: document.getElementById('company').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                message: document.getElementById('message').value
+            };
+
+            // In a real application, you would send this data to your server
+            // For now, we'll show a success message
+            const submitBtn = demoForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Enviando...';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                // Show success message
+                alert(`Obrigado, ${formData.name}! Sua solicitação de demonstração foi recebida. Nossa equipe entrará em contato em até 24 horas úteis para agendar sua apresentação personalizada.`);
+
+                // Reset form
+                demoForm.reset();
+
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 1500);
         });
+
+        // Add animation to stats on scroll
+        const stats = document.querySelectorAll('.stat-card');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('pulse-subtle');
+                }
+            });
+        }, { threshold: 0.5 });
+
+        stats.forEach(stat => statsObserver.observe(stat));
     </script>
 </body>
 
