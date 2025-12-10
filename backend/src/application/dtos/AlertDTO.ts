@@ -1,4 +1,4 @@
-import { AlertType, AlertChannel, AlertStatus } from '../../domain/entities/Alert';
+import { AlertType, AlertChannel, AlertStatus } from '../../domain/entities/alert';
 
 export interface CreateAlertDTO {
   deviceId: string;

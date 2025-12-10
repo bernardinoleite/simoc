@@ -4,7 +4,7 @@ import http from 'http';
 import https from 'https';
 import net from 'net';
 import dns from 'dns';
-import { Device } from '../../../domain/entities/Device';
+import { Device } from '../../../domain/entities/device';
 import { CheckResult, IHealthChecker } from '../../../application/use-cases/monitoring/CheckDeviceHealthUseCase';
 
 const execAsync = promisify(exec);

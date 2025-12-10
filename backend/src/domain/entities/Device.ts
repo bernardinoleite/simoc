@@ -22,6 +22,9 @@ export interface DeviceProps {
   updatedAt?: Date;
 }
 
+
+
+
 export class Device {
   public readonly id: string;
   public name: string;

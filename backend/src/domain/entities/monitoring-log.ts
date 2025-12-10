@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { DeviceStatus } from './Device';
+import { DeviceStatus } from './device';
 
 export interface MonitoringLogProps {
   id?: string;

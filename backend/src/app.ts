@@ -1,13 +1,14 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 
-// Infrastructure
-import { SupabaseDeviceRepository } from './infrastructure/repositories/SupabaseDeviceRepository';
-import { SupabaseMonitoringLogRepository } from './infrastructure/repositories/SupabaseMonitoringLogRepository';
-import { SupabaseAlertRepository } from './infrastructure/repositories/SupabaseAlertRepository';
+// Infrastructure - Prisma Repositories
+import { PrismaDeviceRepository } from './infrastructure/repositories/PrismaDeviceRepository';
+import { PrismaMonitoringLogRepository } from './infrastructure/repositories/PrismaMonitoringLogRepository';
+import { PrismaAlertRepository } from './infrastructure/repositories/PrismaAlertRepository';
 import { NotificationService } from './infrastructure/services/notifications/NotificationService';
 import { HealthChecker } from './infrastructure/services/monitoring/HealthChecker';
 import { MonitoringScheduler } from './infrastructure/services/monitoring/MonitoringScheduler';
+import prisma from './infrastructure/database/prisma';
 
 // Use Cases - Device
 import { CreateDeviceUseCase } from './application/use-cases/device/CreateDeviceUseCase';
@@ -57,10 +58,10 @@ class App {
   }
 
   private setupRoutes(): void {
-    // Repositories
-    const deviceRepository = new SupabaseDeviceRepository();
-    const monitoringLogRepository = new SupabaseMonitoringLogRepository();
-    const alertRepository = new SupabaseAlertRepository();
+    // Repositories (Prisma)
+    const deviceRepository = new PrismaDeviceRepository();
+    const monitoringLogRepository = new PrismaMonitoringLogRepository();
+    const alertRepository = new PrismaAlertRepository();
 
     // Services
     const notificationService = new NotificationService();
@@ -114,29 +115,6 @@ class App {
     this.app.use('/api/alerts', alertRoutes.router);
 
     // Health check
-    this.app.get('/health', (req, res) => {
-      res.status(200).json({
-        status: 'OK',
-        service: 'SIMOC API',
-        timestamp: new Date().toISOString(),
-        version: '1.0.0',
-      });
-    });
-
-    // API Info
-    this.app.get('/api', (req, res) => {
-      res.status(200).json({
-        name: 'SIMOC - Sistema de Monitoramento Corporativo',
-        version: '1.0.0',
-        endpoints: {
-          devices: '/api/devices',
-          monitoring: '/api/monitoring',
-          alerts: '/api/alerts',
-          health: '/health',
-        },
-      });
-    });
-
     // Initialize Monitoring Scheduler
     this.monitoringScheduler = new MonitoringScheduler(
       deviceRepository,
@@ -152,38 +130,26 @@ class App {
   }
 
   public async start(): Promise<void> {
-    // Start monitoring scheduler if Supabase is configured
-    if (process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY) {
-      try {
-        await this.monitoringScheduler?.start();
-      } catch (error) {
-        console.warn('⚠️ Could not start monitoring scheduler:', (error as Error).message);
-      }
-    } else {
-      console.warn('⚠️ Supabase not configured - monitoring scheduler disabled');
+    try {
+      await prisma.$connect();
+      
+      // Start monitoring scheduler
+      await this.monitoringScheduler?.start();
+    } catch (error) {
+      console.warn('Could not start monitoring scheduler:', (error as Error).message);
     }
 
     this.app.listen(this.port, () => {
-      console.log(`
-╔═══════════════════════════════════════════════════════════╗
-║                                                           ║
-║   🖥️  SIMOC - Sistema de Monitoramento Corporativo        ║
-║                                                           ║
-║   🚀 Server running on http://localhost:${this.port}            ║
-║   📚 API Docs: http://localhost:${this.port}/api                ║
-║   ❤️  Health: http://localhost:${this.port}/health              ║
-║                                                           ║
-╚═══════════════════════════════════════════════════════════╝
-      `);
+      console.log(`🚀 Server is running on http://localhost:${this.port}`);
     });
   }
 
-  public stop(): void {
+  public async stop(): Promise<void> {
     this.monitoringScheduler?.stop();
+    await prisma.$disconnect();
   }
 }
 
-// Start the server
 const server = new App(parseInt(process.env.PORT || '3000'));
 server.start();
 

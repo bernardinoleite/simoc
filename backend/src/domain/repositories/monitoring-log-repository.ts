@@ -1,4 +1,4 @@
-import { MonitoringLog } from '../entities/MonitoringLog';
+import { MonitoringLog } from '../entities/monitoring-log';
 
 export interface IMonitoringLogRepository {
   save(log: MonitoringLog): Promise<MonitoringLog>;

@@ -1,4 +1,4 @@
-import { Alert } from '../entities/Alert';
+import { Alert } from '../entities/alert';
 
 export interface IAlertRepository {
   save(alert: Alert): Promise<Alert>;

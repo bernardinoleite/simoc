@@ -6,7 +6,7 @@ export interface UserProps {
   id?: string;
   email: string;
   name: string;
-  phone?: string;
+  phone: string;
   role: UserRole;
   isActive: boolean;
   notifyByEmail: boolean;
@@ -19,7 +19,7 @@ export class User {
   public readonly id: string;
   public email: string;
   public name: string;
-  public phone?: string;
+  public phone: string;
   public role: UserRole;
   public isActive: boolean;
   public notifyByEmail: boolean;

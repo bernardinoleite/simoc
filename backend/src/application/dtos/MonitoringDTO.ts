@@ -1,4 +1,4 @@
-import { DeviceStatus } from '../../domain/entities/Device';
+import { DeviceStatus } from '../../domain/entities/device';
 
 export interface MonitoringLogResponseDTO {
   id: string;

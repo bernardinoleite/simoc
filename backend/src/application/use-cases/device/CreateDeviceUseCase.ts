@@ -1,4 +1,4 @@
-import { Device } from '../../../domain/entities/Device';
+import { Device } from '../../../domain/entities/device';
 import { IDeviceRepository } from '../../../domain/repositories/device-repository';
 import { CreateDeviceDTO, DeviceResponseDTO } from '../../dtos/DeviceDTO';
 

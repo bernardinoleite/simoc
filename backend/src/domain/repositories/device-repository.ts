@@ -1,4 +1,4 @@
-import { Device } from '../entities/Device';
+import { Device } from '../entities/device';
 
 export interface IDeviceRepository {
   save(device: Device): Promise<Device>;

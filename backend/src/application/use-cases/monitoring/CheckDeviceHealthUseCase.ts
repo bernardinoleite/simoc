@@ -1,5 +1,5 @@
-import { Device } from '../../../domain/entities/Device';
-import { MonitoringLog } from '../../../domain/entities/MonitoringLog';
+import { Device } from '../../../domain/entities/device';
+import { MonitoringLog } from '../../../domain/entities/monitoring-log';
 import { IDeviceRepository } from '../../../domain/repositories/device-repository';
 import { IMonitoringLogRepository } from '../../../domain/repositories/monitoring-log-repository';
 

@@ -5,7 +5,7 @@ import { IAlertRepository } from '../../../domain/repositories/alert-repository'
 import { CheckDeviceHealthUseCase } from '../../../application/use-cases/monitoring/CheckDeviceHealthUseCase';
 import { SendAlertUseCase, INotificationService } from '../../../application/use-cases/alert/SendAlertUseCase';
 import { HealthChecker } from './HealthChecker';
-import { Device, DeviceStatus } from '../../../domain/entities/Device';
+import { Device, DeviceStatus } from '../../../domain/entities/device';
 
 export class MonitoringScheduler {
   private scheduledTasks: Map<string, cron.ScheduledTask> = new Map();

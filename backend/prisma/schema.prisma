@@ -1,0 +1,160 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+enum UserRole {
+  ADMIN
+  OPERATOR
+  VIEWER
+}
+
+enum DeviceType {
+  SERVER
+  ROUTER
+  SWITCH
+  API
+  DOMAIN
+  PORT
+  SERVICE
+}
+
+enum CheckType {
+  PING
+  HTTP
+  HTTPS
+  TCP
+  DNS
+}
+
+enum DeviceStatus {
+  ONLINE
+  OFFLINE
+  WARNING
+  UNKNOWN
+}
+
+enum AlertType {
+  DOWN
+  UP
+  WARNING
+  SLOW_RESPONSE
+}
+
+enum AlertChannel {
+  EMAIL
+  SMS
+  BOTH
+}
+
+enum AlertStatus {
+  PENDING
+  SENT
+  FAILED
+}
+
+model User {
+  id             String    @id @default(uuid())
+  email          String    @unique
+  name           String
+  password       String
+  phone          String?
+  role           UserRole  @default(VIEWER)
+  isActive       Boolean   @default(true)
+  notifyByEmail  Boolean   @default(true)
+  notifyBySms    Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  devices        Device[]
+  refreshTokens  RefreshToken[]
+
+  @@map("users")
+}
+
+model Device {
+  id               String       @id @default(uuid())
+  name             String
+  type             DeviceType
+  host             String
+  port             Int?
+  checkType        CheckType
+  checkInterval    Int          @default(60)
+  timeout          Int          @default(5000)
+  status           DeviceStatus @default(UNKNOWN)
+  lastCheck        DateTime?
+  lastResponseTime Int?
+  isActive         Boolean      @default(true)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  userId           String
+  user             User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  monitoringLogs   MonitoringLog[]
+  alerts           Alert[]
+
+  @@index([userId])
+  @@index([status])
+  @@index([isActive])
+  @@map("devices")
+}
+
+model MonitoringLog {
+  id           String       @id @default(uuid())
+  status       DeviceStatus
+  responseTime Int?
+  errorMessage String?
+  checkedAt    DateTime     @default(now())
+
+  deviceId     String
+  device       Device       @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+
+  @@index([deviceId])
+  @@index([checkedAt])
+  @@map("monitoring_logs")
+}
+
+model Alert {
+  id             String       @id @default(uuid())
+  type           AlertType
+  message        String
+  channel        AlertChannel
+  status         AlertStatus  @default(PENDING)
+  recipientEmail String?
+  recipientPhone String?
+  sentAt         DateTime?
+  createdAt      DateTime     @default(now())
+
+  deviceId       String
+  device         Device       @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+
+  @@index([deviceId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("alerts")
+}
+
+model RefreshToken {
+  id          String   @id @default(uuid())
+  token       String   @unique
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+  revoked     Boolean  @default(false)
+  revokedAt   DateTime?
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@map("refresh_tokens")
+}

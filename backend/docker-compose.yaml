@@ -1,15 +1,24 @@
 services:
   db:
-    image: postgres:latest
+    image: postgres:16-alpine
+    container_name: simoc_postgres
     environment:
-      POSTGRES_USER: simoc
-      POSTGRES_PASSWORD: simoc
-      POSTGRES_DB: simoc_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: simoc
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+
   redis:
-    image: redis:latest
+    image: redis:7-alpine
+    container_name: simoc_redis
     ports:
       - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:

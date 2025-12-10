@@ -1,4 +1,4 @@
-import { Alert } from '../../../domain/entities/Alert';
+import { Alert } from '../../../domain/entities/alert';
 import { IAlertRepository } from '../../../domain/repositories/alert-repository';
 import { CreateAlertDTO, AlertResponseDTO } from '../../dtos/AlertDTO';
 
