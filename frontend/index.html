@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIMOC - Sistema de Monitoramento Corporativo</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Animate.css para animações -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        /* Estilos personalizados */
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 99, 235, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+            }
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+        }
+
+        .dashboard-preview {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 10;
+        }
+
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Responsividade aprimorada */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <!-- Header / Navbar -->
+    <header class="fixed w-full bg-white/90 backdrop-blur-md z-50 shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
+                    <i class="fas fa-network-wired text-white text-xl"></i>
+                </div>
+                <span class="text-2xl font-bold text-blue-900">SIMOC</span>
+            </div>
+
+            <nav class="hidden md:flex space-x-8">
+                <a href="#problema" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Problema</a>
+                <a href="#solucao" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Solução</a>
+                <a href="#funcionalidades"
+                    class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Funcionalidades</a>
+                <a href="#contato" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Contato</a>
+            </nav>
+
+            <button id="mobile-menu-btn" class="md:hidden text-blue-900">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-4 px-4 shadow-lg">
+            <div class="flex flex-col space-y-4">
+                <a href="#problema" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Problema</a>
+                <a href="#solucao" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Solução</a>
+                <a href="#funcionalidades"
+                    class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Funcionalidades</a>
+                <a href="#contato" class="text-gray-700 hover:text-blue-600 font-medium transition-colors">Contato</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg pt-32 pb-20 px-4 overflow-hidden">
+        <div class="container mx-auto">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0 text-center lg:text-left">
+                    <h1
+                        class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 hero-title animate__animated animate__fadeInUp">
+                        APRESENTANDO O<br>
+                        <span class="text-yellow-300">SIMOC</span><br>
+                        <span class="text-3xl md:text-4xl">SISTEMA DE MONITORAMENTO CORPORATIVO</span>
+                    </h1>
+
+                    <p class="text-xl text-blue-100 mb-8 animate__animated animate__fadeInUp animate__delay-1s">
+                        Monitoramento inteligente para garantir a estabilidade e performance da sua infraestrutura de
+                        rede.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 animate__animated animate__fadeInUp animate__delay-2s">
+                        <a href="#contato"
+                            class="bg-white text-blue-900 font-bold py-4 px-8 rounded-lg text-lg hover:bg-blue-50 transition-colors text-center pulse-animation">
+                            Solicitar Demonstração <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#solucao"
+                            class="bg-transparent border-2 border-white text-white font-bold py-4 px-8 rounded-lg text-lg hover:bg-white/10 transition-colors text-center">
+                            Saiba Mais
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2 relative">
+                    <div class="dashboard-preview floating">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                            alt="Dashboard SIMOC" class="w-full h-auto">
+                    </div>
+
+                    <!-- Elementos flutuantes decorativos -->
+                    <div
+                        class="absolute -top-4 -right-4 w-20 h-20 bg-yellow-400 rounded-full opacity-20 animate__animated animate__pulse animate__infinite">
+                    </div>
+                    <div
+                        class="absolute -bottom-8 -left-8 w-32 h-32 bg-blue-300 rounded-full opacity-20 animate__animated animate__pulse animate__infinite animate__delay-1s">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problema Section -->
+    <section id="problema" class="py-20 px-4 bg-white">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-blue-900 mb-4 animate__animated">O PROBLEMA</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mb-8"></div>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Empresas com infraestruturas de rede enfrentam desafios constantes que impactam a produtividade e a
+                    continuidade dos negócios.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="card-hover bg-gray-50 p-8 rounded-xl border border-gray-200">
+                    <div class="feature-icon bg-red-100 text-red-600">
+                        <i class="fas fa-exclamation-triangle text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Quedas Inesperadas</h3>
+                    <p class="text-gray-600 text-center">
+                        Falhas súbitas na rede que interrompem operações críticas e geram prejuízos financeiros.
+                    </p>
+                </div>
+
+                <div class="card-hover bg-gray-50 p-8 rounded-xl border border-gray-200">
+                    <div class="feature-icon bg-yellow-100 text-yellow-600">
+                        <i class="fas fa-tachometer-alt text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Lentidão Excessiva</h3>
+                    <p class="text-gray-600 text-center">
+                        Perda de performance na rede que reduz a eficiência das equipes e impacta a experiência do
+                        usuário.
+                    </p>
+                </div>
+
+                <div class="card-hover bg-gray-50 p-8 rounded-xl border border-gray-200">
+                    <div class="feature-icon bg-purple-100 text-purple-600">
+                        <i class="fas fa-server text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Falhas de Dispositivos</h3>
+                    <p class="text-gray-600 text-center">
+                        Routers, switches e servidores falhando sem alertas prévios, causando interrupções prolongadas.
+                    </p>
+                </div>
+
+                <div class="card-hover bg-gray-50 p-8 rounded-xl border border-gray-200">
+                    <div class="feature-icon bg-blue-100 text-blue-600">
+                        <i class="fas fa-search text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">Dificuldade de Diagnóstico</h3>
+                    <p class="text-gray-600 text-center">
+                        Tempo excessivo para identificar a origem dos problemas, prolongando a indisponibilidade.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solução Section -->
+    <section id="solucao" class="py-20 px-4 bg-gradient-to-b from-blue-50 to-white">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-blue-900 mb-4">A SOLUÇÃO</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mb-8"></div>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Criamos um Sistema Inteligente de Monitoramento de Infraestruturas de Redes, capaz de transformar a
+                    gestão da sua rede.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="bg-white rounded-xl shadow-xl p-8 mb-8 card-hover">
+                        <div class="flex items-start mb-6">
+                            <div class="bg-green-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Verificação Automática</h3>
+                                <p class="text-gray-600">
+                                    Monitoramento automático do estado de servidores, routers, switches, APIs, domínios,
+                                    portas e outros serviços em tempo real.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-xl p-8 mb-8 card-hover">
+                        <div class="flex items-start mb-6">
+                            <div class="bg-red-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-bell text-red-600 text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Alertas Instantâneos</h3>
+                                <p class="text-gray-600">
+                                    Notificações por SMS ou e-mail no momento exato em que ocorre uma falha ou anomalia,
+                                    permitindo ação imediata.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-xl p-8 mb-8 card-hover">
+                        <div class="flex items-start mb-6">
+                            <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-tachometer-alt text-blue-600 text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Dashboard em Tempo Real</h3>
+                                <p class="text-gray-600">
+                                    Painel de monitoramento moderno com gráficos, logs, estatísticas e status
+                                    atualizados em tempo real.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-xl p-8 card-hover">
+                        <div class="flex items-start mb-6">
+                            <div class="bg-indigo-100 p-3 rounded-lg mr-4">
+                                <i class="fas fa-shield-alt text-indigo-600 text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Sistema Seguro</h3>
+                                <p class="text-gray-600">
+                                    Autenticação profissional com gestão de utilizadores e controle de acesso baseado em
+                                    funções (RBAC).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
+                        alt="Solução SIMOC" class="rounded-xl shadow-2xl">
+
+                    <!-- Estatísticas flutuantes -->
+                    <div class="absolute -top-6 -left-6 bg-white p-6 rounded-xl shadow-lg">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-blue-700">99.9%</div>
+                            <div class="text-gray-600">Uptime Garantido</div>
+                        </div>
+                    </div>
+
+                    <div class="absolute -bottom-6 -right-6 bg-white p-6 rounded-xl shadow-lg">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-green-700">-60%</div>
+                            <div class="text-gray-600">Tempo de Resolução</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Funcionalidades Section -->
+    <section id="funcionalidades" class="py-20 px-4 bg-white">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-blue-900 mb-4">FUNCIONALIDADES PRINCIPAIS</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mb-8"></div>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Descubra as principais características que tornam o SIMOC a solução ideal para o monitoramento da
+                    sua infraestrutura.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gradient-to-br from-blue-50 to-white p-8 rounded-xl border border-blue-100 card-hover">
+                    <div class="text-blue-700 mb-6">
+                        <i class="fas fa-plug text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Monitoramento Multi-dispositivo</h3>
+                    <p class="text-gray-600">
+                        Acompanhe servidores, routers, switches, firewalls e todos os componentes críticos da sua rede a
+                        partir de uma única plataforma.
+                    </p>
+                </div>
+
+                <div class="bg-gradient-to-br from-green-50 to-white p-8 rounded-xl border border-green-100 card-hover">
+                    <div class="text-green-700 mb-6">
+                        <i class="fas fa-chart-line text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Análise de Performance</h3>
+                    <p class="text-gray-600">
+                        Gráficos detalhados e relatórios de performance para identificar tendências e planejar upgrades
+                        de infraestrutura.
+                    </p>
+                </div>
+
+                <div
+                    class="bg-gradient-to-br from-purple-50 to-white p-8 rounded-xl border border-purple-100 card-hover">
+                    <div class="text-purple-700 mb-6">
+                        <i class="fas fa-history text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Histórico Completo</h3>
+                    <p class="text-gray-600">
+                        Mantenha um log detalhado de todos os eventos, falhas e intervenções para auditoria e análise de
+                        padrões.
+                    </p>
+                </div>
+
+                <div
+                    class="bg-gradient-to-br from-yellow-50 to-white p-8 rounded-xl border border-yellow-100 card-hover">
+                    <div class="text-yellow-700 mb-6">
+                        <i class="fas fa-mobile-alt text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Acesso Mobile</h3>
+                    <p class="text-gray-600">
+                        Dashboard responsivo acessível de qualquer dispositivo, permitindo monitoramento remoto a
+                        qualquer hora.
+                    </p>
+                </div>
+
+                <div class="bg-gradient-to-br from-red-50 to-white p-8 rounded-xl border border-red-100 card-hover">
+                    <div class="text-red-700 mb-6">
+                        <i class="fas fa-user-shield text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Controle de Acesso</h3>
+                    <p class="text-gray-600">
+                        Sistema de permissões granulares com diferentes níveis de acesso para administradores, técnicos
+                        e visualizadores.
+                    </p>
+                </div>
+
+                <div
+                    class="bg-gradient-to-br from-indigo-50 to-white p-8 rounded-xl border border-indigo-100 card-hover">
+                    <div class="text-indigo-700 mb-6">
+                        <i class="fas fa-cogs text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Integrações</h3>
+                    <p class="text-gray-600">
+                        Conecte-se com ferramentas de ITSM, sistemas de tickets, Slack, Microsoft Teams e outras
+                        plataformas corporativas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contato" class="py-20 px-4 gradient-bg text-white">
+        <div class="container mx-auto">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-6">Pronto para transformar o monitoramento da sua rede?</h2>
+                <p class="text-xl mb-10 text-blue-100">
+                    Solicite uma demonstração gratuita e descubra como o SIMOC pode aumentar a estabilidade e reduzir
+                    custos da sua infraestrutura.
+                </p>
+
+                <div class="bg-white rounded-xl p-8 shadow-2xl max-w-2xl mx-auto">
+                    <h3 class="text-2xl font-bold text-blue-900 mb-6">Solicitar Demonstração</h3>
+
+                    <form id="demo-form" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 text-left mb-2" for="name">Nome Completo</label>
+                                <input type="text" id="name"
+                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                                    required>
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 text-left mb-2" for="company">Empresa</label>
+                                <input type="text" id="company"
+                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 text-left mb-2" for="email">E-mail</label>
+                                <input type="email" id="email"
+                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                                    required>
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 text-left mb-2" for="phone">Telefone</label>
+                                <input type="tel" id="phone"
+                                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-700 text-left mb-2" for="message">Mensagem (Opcional)</label>
+                            <textarea id="message" rows="3"
+                                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"></textarea>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full gradient-bg text-white font-bold py-4 px-8 rounded-lg text-lg hover:opacity-90 transition-opacity">
+                            Solicitar Demonstração <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+
+                    <p class="text-gray-500 text-sm mt-4">
+                        Entraremos em contato em até 24 horas úteis para agendar sua demonstração personalizada.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 px-4">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
+                            <i class="fas fa-network-wired text-white text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold">SIMOC</span>
+                    </div>
+                    <p class="text-gray-400">
+                        Sistema Inteligente de Monitoramento Corporativo
+                    </p>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-twitter text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-facebook text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-instagram text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 SIMOC - Sistema de Monitoramento Corporativo. Todos os direitos reservados.</p>
+                <p class="mt-2">Desenvolvido com <i class="fas fa-heart text-red-500"></i> para infraestruturas mais
+                    estáveis e seguras.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botão de voltar ao topo -->
+    <button id="back-to-top"
+        class="fixed bottom-8 right-8 bg-blue-600 text-white w-12 h-12 rounded-full shadow-lg hover:bg-blue-700 transition-colors hidden">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Menu mobile
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Fechar menu mobile ao clicar em um link
+        const mobileLinks = document.querySelectorAll('#mobile-menu a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Animação ao rolar a página
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                }
+            });
+        }, observerOptions);
+
+        // Observar elementos para animação
+        document.querySelectorAll('#problema .card-hover, #solucao .card-hover, #funcionalidades .card-hover').forEach((el, index) => {
+            // Adicionar delay progressivo
+            el.style.animationDelay = `${index * 0.1}s`;
+            observer.observe(el);
+        });
+
+        // Formulário de demonstração
+        const demoForm = document.getElementById('demo-form');
+        demoForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Coletar dados do formulário
+            const formData = {
+                name: document.getElementById('name').value,
+                company: document.getElementById('company').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                message: document.getElementById('message').value
+            };
+
+            // Aqui normalmente enviaríamos os dados para um servidor
+            // Por enquanto, apenas mostraremos um alerta
+            alert(`Obrigado, ${formData.name}! Sua solicitação de demonstração foi recebida. Entraremos em contato em breve.`);
+
+            // Resetar formulário
+            demoForm.reset();
+        });
+
+        // Botão de voltar ao topo
+        const backToTopBtn = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.remove('hidden');
+            } else {
+                backToTopBtn.classList.add('hidden');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Suavizar rolagem para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animar elementos ao carregar a página
+        window.addEventListener('load', () => {
+            document.querySelector('.hero-title').classList.add('animate__animated', 'animate__fadeInUp');
+        });
+    </script>
+</body>
+
+</html>
